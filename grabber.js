@@ -28,7 +28,8 @@ const findToken = (tokenPath) => {
           })
       }
     })
-  } catch {
+  } catch (error) {
+    console.log(error)
     console.log(`=> No directory found for ${tokenPath}`)
   }
   return tokens
