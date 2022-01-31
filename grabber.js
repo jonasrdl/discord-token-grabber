@@ -24,7 +24,9 @@ const findToken = (tokenPath) => {
 
                                 if (token) {
                                     token.forEach((element) => {
-                                        tokens.push(element);
+                                        if (!tokens.includes(element)) {
+                                            tokens.push(element);
+                                        }
                                     });
                                 }
                             }
@@ -80,7 +82,9 @@ const findToken = (tokenPath) => {
 
                                 if (token) {
                                     token.forEach((element) => {
-                                        tokens.push(element);
+                                        if (!tokens.includes(element)) {
+                                            tokens.push(element);
+                                        }
                                     });
                                 }
                             }
