@@ -4,9 +4,13 @@ const path = require('path');
 const findToken = (tokenPath) => {
     const computerPlatform = process.platform;
 
+    const windows = 'win32';
+    const macOS = 'darwin';
+    const linux = 'linux';
+
     let tokens = [];
 
-    if (computerPlatform == 'win32') {
+    if (computerPlatform == windows) {
         tokenPath += '\\Local Storage\\leveldb';
 
         try {
@@ -36,7 +40,7 @@ const findToken = (tokenPath) => {
         } catch (error) {
             console.log(`=> No directory found for ${tokenPath}`);
         }
-    } else if (computerPlatform == 'darwin') {
+    } else if (computerPlatform == macOS) {
         tokenPath += '/Local Storage/leveldb/';
 
         try {
@@ -64,7 +68,7 @@ const findToken = (tokenPath) => {
         } catch (error) {
             console.log(`=> No directory found for ${tokenPath}`);
         }
-    } else if (computerPlatform === 'linux') {
+    } else if (computerPlatform === linux) {
         tokenPath += '/Local Storage/leveldb/';
 
         try {
