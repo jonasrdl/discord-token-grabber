@@ -9,7 +9,10 @@ For educational purposes only.
 ```
 git clone https://github.com/jonasrdl/discord-token-grabber
 cd discord-token-grabber
-node grabber.js
+npm i -g typescript
+npm i
+npm run build
+node dist/grabber.js
 ```
 
 And immediately you will receive your personal tokens. Warning: never give this token to anyone! 
