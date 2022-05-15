@@ -1,0 +1,24 @@
+{
+  "name": "discord-token-grabber",
+  "version": "1.0.0",
+  "description": "A tool that allows you to find out your Discord tokens using Javascript. The token is used e.g. for WebSocket requests during runtime.   \r Discord stores the tokens in local storage. Since Discord runs on Electron, we can access it relatively easily.",
+  "main": "grabber.js",
+  "scripts": {
+    "start": "tsc && node ./dist/grabber.js",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonasrdl/discord-token-grabber.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jonasrdl/discord-token-grabber/issues"
+  },
+  "homepage": "https://github.com/jonasrdl/discord-token-grabber#readme",
+  "devDependencies": {
+    "@types/node": "^17.0.33"
+  }
+}
